@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 #{title}
+  br
+  //- ul.list-group
+  ul
+    if articles.length
+      each article, i in articles
+        li.list-group-item 
+          a(href="/articles/"+article._id)= article.name
+    else
+       br
+       h3 No victims yet
+       br
+

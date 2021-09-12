@@ -1,0 +1,19 @@
+extends index
+block content
+  h1 #{title}
+  br
+  //- ul.list-group
+  ul
+    if applications.length
+      each app, i in applications
+        li.list-group-item 
+          a(href="/applications/"+app._id)= app.name
+    else
+       br
+       h3 No victims yet
+       br
+  br
+
+  hr
+  footer
+  p  &copy; 2021
