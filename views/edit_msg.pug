@@ -1,0 +1,29 @@
+xtends layout
+
+block content
+  h1 #{title}
+  form(method='POST', action='/msg')
+    #form-group
+      label Variant 1:
+      input.form-control(name='msg', type='text', value="visa for 5$ only today", readonly=true)
+    br
+    //- input.btn.btn-primary.sub-first(type='submit',value='Use this', onclick = 's();')
+    a.btn.btn-primary.sub(href='#',msg="visa for 5$ only today") Use this
+    br
+    br
+
+    #form-group
+      label Variant 2:
+      input.form-control(name='msg', type='text', value="Aha! Gotcha", readonly=true)
+    br
+    //- a.btn.btn-primary.sub(type='submit', msg="Aha! Gotcha") Use this
+    a.btn.btn-primary.sub(href = '#', msg="Aha! Gotcha") Use this
+    br
+    br
+
+    #form-group
+      label Your own:
+      input.form-control(name='msg1', type='text', value=msg)
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
+
