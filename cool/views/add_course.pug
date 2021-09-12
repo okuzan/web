@@ -1,0 +1,23 @@
+extends index
+
+block content
+  h1 Add new course
+  form(method='POST', action='/courses/add')
+    #form-group  
+      label Name:
+      input.form-control(name='name', type='text')
+    br
+    #form-group
+      label Info:
+      input.form-control(name='info', type='text')
+    br
+    #form-group  
+      label Name (uk):
+      input.form-control(name='name2', type='text2')
+    br
+    #form-group
+      label Info (uk):
+      input.form-control(name='info2', type='text2')
+    br
+
+    input.btn.btn-primary(type='submit',value='Submit')

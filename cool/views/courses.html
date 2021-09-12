@@ -1,0 +1,114 @@
+<DOCTYPE html>
+    <html>
+    <head>
+        <title>cool</title>
+        <meta charset='utf-8'/>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    </head>
+    <body>
+    <h1>Courses</h1>
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+
+
+    <div id="app" class="container">
+        <ul v-for="(row, index) in datasource">
+            <li v-for="(column, index2) in columns" class="wrap-break-word" v-show="true">
+                <training
+                        v-bind:row="row"
+                        v-bind:column="column"
+                        v-bind:index="index"
+                        v-bind:datasource="datasource"
+                        v-bind:index2="index2"
+                ></training>
+            </li>
+            <br>
+        </ul>
+    </div>
+
+    <script type="module">
+        let text = "";
+        $.ajax({
+            type: 'GET',
+            url: '/data',
+            success: function (response) {
+                text = response;
+                (async () => {
+                    let courses = text.split('\n');
+                    let data = [];
+                    for (const c of courses) {
+                        let parts = c.split('|');
+                        data.push({"name": parts[0], "info": parts[1]});
+                    }
+                    const vueApp = new Vue({
+                        el: '#app',
+
+                        data() {
+                            return {
+                                toggle: false,
+                                showAll: false,
+                                columns: ["name", "info"],
+                                datasource: data
+                            }
+                        },
+                        components: {
+                            'training': {
+                                props: ['index2', 'index', 'row', 'column', 'datasource'],
+                                methods: {
+                                    //toggle specified element
+                                    toggleFlag: function (index, column) {
+                                        this.datasource[index][column].toggled = true;
+                                    },
+                                    //show only portion
+                                    limitTo: function (value) {
+                                        if (!value) return '';
+                                        return value.substring(0, 50) + '...';
+                                    },
+                                },
+
+                                template: 
+                                        `<div class="blog-post">
+                                        <span v-if="row[column].txt.length >= 50 && row[column].toggled === false && index2 % 2 === 1"
+                                        v-html="limitTo(row[column].txt)"></span>
+                                        <span style="font-size: 30px; font-weight: bold"
+                                        v-if="row[column].txt.length >= 50 && row[column].toggled === false && index2 % 2 !== 1"
+                                        v-html="limitTo(row[column].txt)"></span>
+                                        <a class="readmore" v-on:click="toggleFlag(index,column)"
+                                        v-show="row[column].txt.length >= 50 && row[column].toggled === false">Read more</a>
+                                        <span v-if="(row[column].txt.length < 50 || row[column].toggled === true) && index2 % 2 === 1"
+                                        v-html="row[column].txt"></span>
+                                        <span style="font-size: 30px; font-weight: bold" v-if="(row[column].txt.length < 50 || row[column].toggled === true) && index2 % 2 !== 1"
+                                        v-html="row[column].txt"></span>
+                                        </div>
+                                        `
+                            }
+                        },
+                        mounted() {
+                            let d = [];
+                            d = this.datasource.map(item => {
+                                let o = {
+                                    "name": {
+                                        txt: item.name,
+                                        toggled: true
+                                    },
+                                    "info": {
+                                        txt: item.info,
+                                        toggled: false
+                                    },
+                                }
+                                return o;
+                            });
+
+                            this.datasource = d;
+                        }
+                    })
+                })();
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    </script>
+    </body>
+    </html>

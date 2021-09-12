@@ -1,0 +1,15 @@
+extends index
+block content
+  h1 Applications
+  br
+  ul
+    if applications.length
+      each app, i in applications
+        li.list-group-item 
+          a(href="/applications/"+app._id)= app.name +" " + app.surname
+    else
+       br
+       h3 No applications yet
+       br
+  br
+    

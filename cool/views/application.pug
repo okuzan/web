@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= application.name + " " + application.surname
+  br
+  h3 Mail:
+  h4= application.mail
+  br
+  h3 Phone:
+  h4= application.phone
+  br
+  h3 Text:
+  h4= application.text
+  br
+  a.btn.btn-danger.delete-application(href='#',data-id=application._id) Delete
+  

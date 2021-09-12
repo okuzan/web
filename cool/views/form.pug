@@ -1,0 +1,24 @@
+form#formm(method='POST', action='/'+ lang +'/apply')
+  #form-group
+    label #{form[6]}
+  #form-group
+    label #{form[0]}:
+    input#name.form-control(name='name', type='text')
+  br
+  #form-group
+    label #{form[1]}:
+    input#surname.form-control(name='surname', type='text')
+  br      
+  #form-group
+    label #{form[2]}:
+    input#mail.form-control(name='mail', type='text')
+  br
+  #form-group
+    label #{form[3]}:
+    input#phone.form-control(name='phone', type='text')
+  br
+  #form-group
+    label #{form[4]}:
+    textarea#text.form-control(name='text', type='text')
+  br      
+  input#apply.btn.btn-primary.submitapp(type='submit',value=form[5], onclick='printt')
